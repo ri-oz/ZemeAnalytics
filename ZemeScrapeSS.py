@@ -12,6 +12,9 @@ from pydrive.drive import GoogleDrive
 import pygsheets
 import streamlit as st
 import numpy as np
+from datetime import datetime
+
+
 
 
 
@@ -186,6 +189,14 @@ def get_datums(url):
 
 
 
+def data_collection_date():
+
+    Todaydate = datetime.today().strftime('%Y-%m-%d')
+
+    return Todaydate
+
+
+
 
 Price_list = [get_ZemePrice(i) for i in adw_list]
 Iela_list = [get_ZemeIela_nosaukums(i) for i in adw_list]
@@ -199,9 +210,55 @@ Knumurs_list = [get_ZemeKnumurs(i) for i in adw_list]
 adv_detalas_dictfromlist = {'Link': adw_list, 'Pilseta': Pilseta_list, 'Iela':Iela_list, 'Platiba': Platiba_list, 'Cena': Price_list, 'Zemes Tips': Pielietojums_list, 'Zemes Numurs':Knumurs_list, 'Datums':dates_list}
 
 df_zeme = pd.DataFrame(adv_detalas_dictfromlist)
+df_zeme['Datu iev.']=data_collection_date()
 
 
 
+#st.dataframe(df_zeme)
 
-st.dataframe(df_zeme)
 
+
+# %%
+
+#authorization
+gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
+
+#open the google spreadsheet (where 'PY to Gsheet Test' is the name of my sheet)
+sh = gc.open('Py_land_data')
+
+#select the first sheet 
+wks = sh[0]
+
+#update the first sheet with df, starting at cell B2. 
+wks.set_dataframe(df_zeme,(1,1))
+
+#wks.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_zeme})
+
+# %%
+
+df_values = df_zeme.values.tolist()
+
+wks.df_zeme.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_values})
+
+#%%
+
+
+
+#Append list to Google Sheets with Python
+#You can also append data after a table of data in a sheet using the spreadsheets.values.append method. It does not require specifying a range as the data will be added to the sheet beginning from the first empty row after the row with data.
+
+def append():
+    values = read_ranges()
+    data = [
+         values[0]['values'], values[1]['values']
+    ]
+    body = {
+        'valueInputOption': 'USER_ENTERED',
+        'data': data
+    }
+    result = spreadsheet_service.spreadsheets().values().append(
+        spreadsheetId=spreadsheet_id, body=body).execute()
+    print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
+append()
+
+# %%
