@@ -220,45 +220,60 @@ df_zeme['Datu iev.']=data_collection_date()
 
 # %%
 
-#authorization
-gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
+#Writing dataframe to google sheets 
 
-#open the google spreadsheet (where 'PY to Gsheet Test' is the name of my sheet)
-sh = gc.open('Py_land_data')
+#replaces what is there if not empty,run only the first time when new file is generated
+
+#authorization
+
+#gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
+
+#open the google spreadsheet
+
+#sh = gc.open('Py_land_data')
 
 #select the first sheet 
-wks = sh[0]
 
-#update the first sheet with df, starting at cell B2. 
-wks.set_dataframe(df_zeme,(1,1))
+#wks = sh[0]
 
-#wks.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_zeme})
+#update the first sheet with df, starting at cell B2.
+ 
+#wks.set_dataframe(df_zeme,(1,1))
 
-# %%
 
-df_values = df_zeme.values.tolist()
 
-wks.df_zeme.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_values})
 
 #%%
 
+#Google Sheets append part 
 
 
-#Append list to Google Sheets with Python
-#You can also append data after a table of data in a sheet using the spreadsheets.values.append method. It does not require specifying a range as the data will be added to the sheet beginning from the first empty row after the row with data.
+from __future__ import print_function
+from auth.CAS.REST.service import api
+from pprint import pprint
+from googleapiclient import discovery
 
-def append():
-    values = read_ranges()
-    data = [
-         values[0]['values'], values[1]['values']
-    ]
-    body = {
-        'valueInputOption': 'USER_ENTERED',
-        'data': data
-    }
-    result = spreadsheet_service.spreadsheets().values().append(
-        spreadsheetId=spreadsheet_id, body=body).execute()
-    print('{0} cells updated.'.format(result.get('totalUpdatedCells')))
-append()
+#%%
+
+# The ID of the spreadsheet to update.
+spreadsheet_id = '1karOXhe5kVN1dTJTCeNsKg4QHuqOZ80LPx-YRV--2fE'  # TODO: Update placeholder value.
+
+# The A1 notation of a range to search for a logical table of data.
+# Values will be appended after the last row of the table.
+range_ = 'A:I'  # TODO: Update placeholder value.
+
+# How the input data should be interpreted.
+value_input_option = 'RAW'  # TODO: Update placeholder value.
+
+# How the input data should be inserted.
+insert_data_option = 'INSERT_ROWS'  # TODO: Update placeholder value.
+
+df_values = df_zeme.values.tolist()
+
+value_range_body = {df_values}
+
+request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=value_range_body)
+response = request.execute()
+
 
 # %%
