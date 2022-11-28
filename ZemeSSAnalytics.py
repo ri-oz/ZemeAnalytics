@@ -25,11 +25,14 @@ from datetime import datetime
 
 url = 'https://raw.githubusercontent.com/ri-oz/ZemeAnalytics/QA/Py_land_data%20-%20Sheet1.csv'
 
-df_Zeme = pd.read_csv(url, index_col=0)
+df_Zeme = pd.read_csv(url)
 
 # Drop error / na rows
 
 df_Zeme.dropna(how='any')
+
+df_zeme_clean = df_Zeme[["Pilseta","Zemes Tips","Cena EUR","Cena m2","Platiba Daudzums","Platiba Mervieniba","Adrese","Link"]]
+
 
 #df_Zeme = pd.DataFrame(wks.get_all_records())
 
@@ -59,11 +62,11 @@ st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
 # Create a section for the dataframe statistics
 
 st.header('Datu statistiskā anaīze')
-st.write(df_Zeme.describe())
+st.write(df_zeme_clean.describe())
 
 # Create a section for the dataframe
 st.header('Sludinājumu dati')
-st.dataframe(df_Zeme)
+st.dataframe(df_zeme_clean)
 
 
 # City overview section
@@ -110,3 +113,5 @@ st.bar_chart(df_Zeme_max_min_avg_izmers)
 st.dataframe(df_Zeme_max_min_avg_izmers)
 
 
+
+# %%
