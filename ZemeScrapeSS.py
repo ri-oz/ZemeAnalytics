@@ -224,20 +224,26 @@ df_zeme['Datu iev.']=data_collection_date()
 
 # Dataframe clean up proceses
 
+
 df_zeme[['Cena EUR','Cena m2']] = df_zeme['Cena'].str.split('€',n=1,expand=True)
 df_zeme[['Platiba Daudzums','Platiba Mervieniba']] = df_zeme['Platiba'].str.split(' ',n=1,expand=True)
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('€/m²', '')
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace(')', '')
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('(', '')
 
+df_zeme[['Adrese','Iela2']] = df_zeme['Iela'].str.split('[',n=1,expand=True)
+
+
 df_zeme['Platiba Daudzums'] = pd.to_numeric(df_zeme['Platiba Daudzums'])
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace(' ', '')
+df_zeme['Cena EUR'] = df_zeme['Cena EUR'].str.replace(' ', '')
 df_zeme['Cena EUR'] = pd.to_numeric(df_zeme['Cena EUR'])
 df_zeme['Cena m2'] = pd.to_numeric(df_zeme['Cena m2'])
 
 del df_zeme['Platiba']
 del df_zeme['Cena']
-
+del df_zeme['Iela']
+del df_zeme['Iela2']
 
 
 #st.dataframe(df_zeme)
@@ -262,3 +268,5 @@ wks = sh[0]
  
 wks.set_dataframe(df_zeme,(1,1))
 
+
+# %%
