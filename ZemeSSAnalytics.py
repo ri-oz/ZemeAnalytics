@@ -9,8 +9,6 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from datetime import datetime
-import matplotlib.pyplot as plt
-
  
 #gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
 
