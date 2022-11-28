@@ -53,7 +53,7 @@ st.title('Zemes Cenu pārskats Latvijā')
 
 # Description
 
-st.text('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
+st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
 
 
 # Create a section for the dataframe statistics
@@ -101,7 +101,6 @@ else:
 
 
 
-
 # Izmers owerview
 
 st.header('Zemes izmēru pārskats')
@@ -109,7 +108,5 @@ st.header('Zemes izmēru pārskats')
 st.bar_chart(df_Zeme_max_min_avg_izmers)
 
 st.dataframe(df_Zeme_max_min_avg_izmers)
-
-
 
 
