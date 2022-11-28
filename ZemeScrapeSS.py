@@ -229,6 +229,12 @@ df_zeme[['Platiba Daudzums','Platiba Mervieniba']] = df_zeme['Platiba'].str.spli
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('€/m²', '')
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace(')', '')
 df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('(', '')
+
+df_zeme['Platiba Daudzums'] = pd.to_numeric(df_zeme['Platiba Daudzums'])
+df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace(' ', '')
+df_zeme['Cena EUR'] = pd.to_numeric(df_zeme['Cena EUR'])
+df_zeme['Cena m2'] = pd.to_numeric(df_zeme['Cena m2'])
+
 del df_zeme['Platiba']
 del df_zeme['Cena']
 
@@ -256,5 +262,3 @@ wks = sh[0]
  
 wks.set_dataframe(df_zeme,(1,1))
 
-
-# %%
