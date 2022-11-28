@@ -84,3 +84,5 @@ st.dataframe(df_Zeme_analytics_Tips_skaits)
 
 
 
+
+# %%
