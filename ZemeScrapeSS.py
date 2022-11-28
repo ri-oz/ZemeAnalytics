@@ -53,13 +53,11 @@ def getRows(url):
         print("Bad Request"+req.status_code)
         return
     soup = BeautifulSoup(req.text, 'lxml')
-    print("Processing: "+ str(soup.title))
-    # this will be specific to ss.lv and ss.com
     alltrs = soup.find_all('tr')
     for el in alltrs:
         if 'id' in el.attrs and 'tr_' in el.attrs['id']:
             rows.append(el)
-    rows = rows[:-1] # we do not need the last one nor do we need to store
+    rows = rows[:-1] # do not need the last one nor do need to store
     return rows
 
 
@@ -72,7 +70,6 @@ def processPage(url):
 def processPages(urls):
     results = []
     for url in urls:
-        print("Processing: "+url)
         results += processPage(url)
         time.sleep(0.1)
     return results
@@ -88,10 +85,20 @@ dfmylist = pd.DataFrame(mylist)
 adw_list = dfmylist[0].tolist()
 
 
-def get_ZemePrice(url):
+
+def get_url_text_html(url):
     
     response = requests.get(url)
     soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    
+    return soup_adv_text_html
+
+
+
+
+def get_ZemePrice(url):
+    
+    soup_adv_text_html = get_url_text_html(url)
     price_detail_soup = soup_adv_text_html.find(id="tdo_8")
     
     if price_detail_soup == None:
@@ -106,8 +113,7 @@ def get_ZemePrice(url):
 
 def get_ZemePielietojums(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     pielietojums_detail_soup = soup_adv_text_html.find(id="tdo_228")
     
     if pielietojums_detail_soup == None:
@@ -121,8 +127,7 @@ def get_ZemePielietojums(url):
 
 def get_Zemeplatiba(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     platiba_detail_soup = soup_adv_text_html.find(id="tdo_3")
     
     if platiba_detail_soup == None:
@@ -136,8 +141,7 @@ def get_Zemeplatiba(url):
 
 def get_ZemeKnumurs(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     Knumurs_detail_soup = soup_adv_text_html.find(id="tdo_1631")
     
     if Knumurs_detail_soup == None:
@@ -151,8 +155,7 @@ def get_ZemeKnumurs(url):
 
 def get_ZemePilseta(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     Pilseta_detail_soup = soup_adv_text_html.find(id="tdo_20")
     
     if Pilseta_detail_soup == None:
@@ -166,8 +169,7 @@ def get_ZemePilseta(url):
 
 def get_ZemeIela_nosaukums(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     Iela_nosaukums_detail_soup = soup_adv_text_html.find(id="tdo_11")
     
     if Iela_nosaukums_detail_soup == None:
@@ -181,8 +183,7 @@ def get_ZemeIela_nosaukums(url):
 
 def get_datums(url):
     
-    response = requests.get(url)
-    soup_adv_text_html = BeautifulSoup(response.text, 'html.parser')
+    soup_adv_text_html = get_url_text_html(url)
     datums_detail_soup = soup_adv_text_html.findAll(text=re.compile('Datums:'))
         
     return datums_detail_soup
@@ -226,54 +227,25 @@ df_zeme['Datu iev.']=data_collection_date()
 
 #authorization
 
-#gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
+gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
 
 #open the google spreadsheet
 
-#sh = gc.open('Py_land_data')
+sh = gc.open('Py_land_data')
 
 #select the first sheet 
 
-#wks = sh[0]
+wks = sh[0]
 
 #update the first sheet with df, starting at cell B2.
  
-#wks.set_dataframe(df_zeme,(1,1))
+wks.set_dataframe(df_zeme,(1,1))
 
 
 
 
 #%%
 
-#Google Sheets append part 
+#Google Sheets append part
 
 
-from __future__ import print_function
-from auth.CAS.REST.service import api
-from pprint import pprint
-from googleapiclient import discovery
-
-#%%
-
-# The ID of the spreadsheet to update.
-spreadsheet_id = '1karOXhe5kVN1dTJTCeNsKg4QHuqOZ80LPx-YRV--2fE'  # TODO: Update placeholder value.
-
-# The A1 notation of a range to search for a logical table of data.
-# Values will be appended after the last row of the table.
-range_ = 'A:I'  # TODO: Update placeholder value.
-
-# How the input data should be interpreted.
-value_input_option = 'RAW'  # TODO: Update placeholder value.
-
-# How the input data should be inserted.
-insert_data_option = 'INSERT_ROWS'  # TODO: Update placeholder value.
-
-df_values = df_zeme.values.tolist()
-
-value_range_body = {df_values}
-
-request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, range=range_, valueInputOption=value_input_option, insertDataOption=insert_data_option, body=value_range_body)
-response = request.execute()
-
-
-# %%
