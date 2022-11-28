@@ -9,6 +9,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from datetime import datetime
+
  
 #gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
 
@@ -37,6 +38,13 @@ df_Zeme.dropna(how='any')
 df_Zeme_analytics_Pilseta_skaits = df_Zeme['Pilseta'].value_counts(ascending=True)
 
 df_Zeme_analytics_Tips_skaits = df_Zeme['Zemes Tips'].value_counts(ascending=True)
+
+df_Zeme_max_min_avg_cena_eur = df_Zeme.groupby('Pilseta').agg({'Cena EUR': ['mean', 'min', 'max']})
+df_Zeme_max_min_avg_cena_m2 = df_Zeme.groupby('Pilseta').agg({'Cena m2': ['mean', 'min', 'max']})
+
+df_Zeme_max_min_avg_izmers = df_Zeme.groupby('Pilseta').agg({'Platiba Daudzums': ['mean', 'min', 'max']})
+
+
 
 # Title
 
@@ -76,13 +84,32 @@ st.bar_chart(df_Zeme_analytics_Tips_skaits)
 st.dataframe(df_Zeme_analytics_Tips_skaits)
 
 
+# Prices owerview
+
+st.header('Videjās Cenas')
+
+st.bar_chart(df_Zeme_max_min_avg_cena_eur)
+
+Cenas_tips = st.radio(
+    "Cenas tips",
+    ('Pilna cena', 'Cena par m2'))
+
+if Cenas_tips == 'Pilna cena':
+    st.dataframe(df_Zeme_max_min_avg_cena_eur)
+else:
+    st.dataframe(df_Zeme_max_min_avg_cena_m2)
 
 
 
 
+# Izmers owerview
+
+st.header('Zemes izmēru pārskats')
+
+st.bar_chart(df_Zeme_max_min_avg_izmers)
+
+st.dataframe(df_Zeme_max_min_avg_izmers)
 
 
 
 
-
-# %%
