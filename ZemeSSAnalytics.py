@@ -3,35 +3,42 @@
 #%%
 
 import pandas as pd
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-import pygsheets
+#from pydrive.auth import GoogleAuth
+#from pydrive.drive import GoogleDrive
+#import pygsheets
 import streamlit as st
 import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 
  
-gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
+#gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
 
 #open the google spreadsheet
 
-sh = gc.open('Py_land_data')
+#sh = gc.open('Py_land_data')
 
 #select the first sheet 
 
-wks = sh[0]
+#wks = sh[0]
 
 # create dataframe
 
-df_Zeme = pd.DataFrame(wks.get_all_records())
+url = 'https://raw.githubusercontent.com/ri-oz/ZemeAnalytics/main/Py_land_data%20-%20Sheet1.csv'
+
+df_Zeme = pd.read_csv(url, index_col=0)
+
+# Drop error / na rows
+
+df_Zeme.dropna(how='any')
+
+#df_Zeme = pd.DataFrame(wks.get_all_records())
 
 #df_Zeme_analytics_Cena_bins = df_Zeme['Cena EUR'].value_counts(bins=20)
 
 df_Zeme_analytics_Pilseta_skaits = df_Zeme['Pilseta'].value_counts(ascending=True)
 
 df_Zeme_analytics_Tips_skaits = df_Zeme['Zemes Tips'].value_counts(ascending=True)
-
 
 # Title
 
@@ -69,4 +76,13 @@ st.header('Zemes Tipi')
 st.bar_chart(df_Zeme_analytics_Tips_skaits)
 
 st.dataframe(df_Zeme_analytics_Tips_skaits)
+
+
+
+
+
+
+
+
+
 

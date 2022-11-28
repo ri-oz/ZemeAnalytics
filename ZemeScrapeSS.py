@@ -245,6 +245,7 @@ del df_zeme['Cena']
 del df_zeme['Iela']
 del df_zeme['Iela2']
 
+df_zeme.dropna(how='any')
 
 #st.dataframe(df_zeme)
 
