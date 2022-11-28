@@ -217,10 +217,6 @@ df_zeme['Datu iev.']=data_collection_date()
 
 #st.dataframe(df_zeme)
 
-
-
-# %%
-
 #Writing dataframe to google sheets 
 
 #replaces what is there if not empty,run only the first time when new file is generated
@@ -240,6 +236,8 @@ wks = sh[0]
 #update the first sheet with df, starting at cell B2.
  
 wks.set_dataframe(df_zeme,(1,1))
+
+
 
 
 
