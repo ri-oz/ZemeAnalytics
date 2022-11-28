@@ -15,7 +15,7 @@ import numpy as np
 from datetime import datetime
 
 
-
+#functions to get adv list from SS for all regaions from all subsites
 
 
 def getUrlList(url, prefix='https://www.ss.com', postfix='sell/', tag='a', class_='a_category'):
@@ -75,8 +75,12 @@ def processPages(urls):
     return results
 
 
+# base url for the scraping process
+
 url = "https://www.ss.lv/lv/real-estate/plots-and-lands/"
 
+
+#list of ads to process
 
 mylist = processPages(getUrlList(url))
 
@@ -85,6 +89,7 @@ dfmylist = pd.DataFrame(mylist)
 adw_list = dfmylist[0].tolist()
 
 
+# Functions to get adv data
 
 def get_url_text_html(url):
     
@@ -197,7 +202,7 @@ def data_collection_date():
     return Todaydate
 
 
-
+# Making lists of data for dataframe columns
 
 Price_list = [get_ZemePrice(i) for i in adw_list]
 Iela_list = [get_ZemeIela_nosaukums(i) for i in adw_list]
@@ -208,10 +213,24 @@ dates_list = [get_datums(i) for i in adw_list]
 Knumurs_list = [get_ZemeKnumurs(i) for i in adw_list]
 
 
+# building dictionary for dataframe
+
 adv_detalas_dictfromlist = {'Link': adw_list, 'Pilseta': Pilseta_list, 'Iela':Iela_list, 'Platiba': Platiba_list, 'Cena': Price_list, 'Zemes Tips': Pielietojums_list, 'Zemes Numurs':Knumurs_list, 'Datums':dates_list}
+
+# building dataframe
 
 df_zeme = pd.DataFrame(adv_detalas_dictfromlist)
 df_zeme['Datu iev.']=data_collection_date()
+
+# Dataframe clean up proceses
+
+df_zeme[['Cena EUR','Cena m2']] = df_zeme['Cena'].str.split('€',n=1,expand=True)
+df_zeme[['Platiba Daudzums','Platiba Mervieniba']] = df_zeme['Platiba'].str.split(' ',n=1,expand=True)
+df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('€/m²', '')
+df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace(')', '')
+df_zeme['Cena m2'] = df_zeme['Cena m2'].str.replace('(', '')
+del df_zeme['Platiba']
+del df_zeme['Cena']
 
 
 
@@ -238,12 +257,4 @@ wks = sh[0]
 wks.set_dataframe(df_zeme,(1,1))
 
 
-
-
-
-
-#%%
-
-#Google Sheets append part
-
-
+# %%
