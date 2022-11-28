@@ -23,7 +23,7 @@ from datetime import datetime
 
 # create dataframe
 
-url = 'https://raw.githubusercontent.com/ri-oz/ZemeAnalytics/main/Py_land_data%20-%20Sheet1.csv'
+url = 'https://raw.githubusercontent.com/ri-oz/ZemeAnalytics/QA/Py_land_data%20-%20Sheet1.csv'
 
 df_Zeme = pd.read_csv(url, index_col=0)
 
