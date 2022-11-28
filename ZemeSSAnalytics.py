@@ -59,6 +59,9 @@ st.title('Zemes Cenu pārskats Latvijā')
 st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
 
 
+st.caption('Made by RIOZ')
+
+
 # Create a section for the dataframe statistics
 
 st.header('Datu statistiskā anaīze')
