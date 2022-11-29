@@ -94,7 +94,7 @@ st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
 st.write('[Sludinājumu pārskats](https://ri-oz-zemeanalytics-zemesludinajumuparskats-qa-mzwx0y.streamlit.app)')
 
 
-st.caption('Made by RIOZ')
+st.caption('Developed by RIOZ')
 
 
 # Create a section for the dataframe statistics
