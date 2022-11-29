@@ -165,7 +165,7 @@ import altair as alt
 
 chart_data = df_pilseta
 c = alt.Chart(chart_data).mark_circle().encode(
-    x='Videja Cena EUR', y='Videja Cena m2', color='Videja Cena EUR', tooltip=['Videja Cena EUR', 'Videja Cena m2'])
+    x='Videja Cena EUR', y='Videja Cena m2',size= 'Videja Platiba Daudzums', color='Videja Cena EUR', tooltip=['Videja Cena EUR', 'Videja Cena m2'])
 
 st.altair_chart(c, use_container_width=True)
 
