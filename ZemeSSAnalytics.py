@@ -102,6 +102,7 @@ dfres['Link'] = dfres['Link'].apply(make_clickable)
 dfres = dfres.to_html(escape=False)
 st.write(dfres, unsafe_allow_html=True)
 
+pd.set_option('display.max_colwidth', -1)
 
 st.dataframe(dfres)
 
