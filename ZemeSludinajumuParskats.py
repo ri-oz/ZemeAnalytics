@@ -59,6 +59,8 @@ st.title('Zemes Cenu pārskats Latvijā')
 
 st.markdown('Sludinājumu pārskats.')
 
+st.write('[Zemes Cenu pārskats Latvijā](https://ri-oz-zemeanalytics-zemessanalytics-qa-he90vd.streamlit.app)')
+
 
 st.caption('Made by RIOZ')
 

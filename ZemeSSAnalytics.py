@@ -59,8 +59,7 @@ st.title('Zemes Cenu pārskats Latvijā')
 
 st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
 
-
-st.button("Zemes gabali",on_click="https://ri-oz-zemeanalytics-zemesludinajumuparskats-qa-mzwx0y.streamlit.app/")
+st.write('[Sludinājumu pārskats](https://ri-oz-zemeanalytics-zemesludinajumuparskats-qa-mzwx0y.streamlit.app)')
 
 
 st.caption('Made by RIOZ')
