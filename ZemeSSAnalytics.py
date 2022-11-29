@@ -64,7 +64,7 @@ st.caption('Made by RIOZ')
 
 # Create a section for the dataframe statistics
 
-st.header('Datu statistiskā anaīze')
+st.header('Datu statistiskā analīze')
 st.write(df_zeme_clean.describe())
 
 # Create a section for the dataframe
@@ -92,7 +92,7 @@ st.dataframe(df_Zeme_analytics_Tips_skaits)
 
 # Prices owerview
 
-st.header('Videjās Cenas')
+st.header('Vidējās Cenas')
 
 st.bar_chart(df_Zeme_max_min_avg_cena_eur)
 
