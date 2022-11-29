@@ -51,4 +51,20 @@ df_Knumurs_valid = df_Zeme['Zemes Numurs'].value_counts(ascending=True)
 
 
 
+df_tips_mean = df_zeme_clean.groupby(['Zemes Tips']).mean()
+df_tips_max = df_zeme_clean.groupby(['Zemes Tips']).max()
+df_tips_min = df_zeme_clean.groupby(['Zemes Tips']).min()
+
+
+
+#%%
+
+
+df_pilseta_mean = df_zeme_clean.groupby(['Pilseta']).mean()
+df_pilseta_max = df_zeme_clean.groupby(['Pilseta']).max()
+df_pilseta_min = df_zeme_clean.groupby(['Pilseta']).min()
+
+
 # %%
+
+
