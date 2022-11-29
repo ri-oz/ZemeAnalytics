@@ -180,3 +180,34 @@ else:
 
 
 # %%
+
+source = df_pilseta
+
+# Configure the options common to all layers
+brush = alt.selection(type='interval')
+base = alt.Chart(source).add_selection(brush)
+
+# Configure the points
+points = base.mark_point().encode(
+    x=alt.X('Videja Cena EUR', title=''),
+    y=alt.Y('Videja Platiba Daudzums', title=''),
+    color=alt.condition(brush, 'Pilseta', alt.value('grey'))
+)
+
+# Configure the ticks
+tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
+
+x_ticks = base.mark_tick().encode(
+    alt.X('Videja Cena EUR', axis=tick_axis),
+    alt.Y('Pilseta', title='', axis=tick_axis),
+    color=alt.condition(brush, 'Pilseta', alt.value('lightgrey'))
+)
+
+y_ticks = base.mark_tick().encode(
+    alt.X('Pilseta', title='', axis=tick_axis),
+    alt.Y('Videja Platiba Daudzums', axis=tick_axis),
+    color=alt.condition(brush, 'Pilseta', alt.value('lightgrey'))
+)
+
+# Build the chart
+y_ticks | (points & x_ticks)
