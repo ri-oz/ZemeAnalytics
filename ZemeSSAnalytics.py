@@ -9,6 +9,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from datetime import datetime
+from bokeh.models.widgets import Div
+
 
  
 #gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
@@ -57,6 +59,14 @@ st.title('Zemes Cenu pārskats Latvijā')
 # Description
 
 st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
+
+
+if st.button('Sludinājumu Pārskats'):
+    js = "window.open('https://ri-oz-zemeanalytics-zemesludinajumuparskats-qa-mzwx0y.streamlit.app/')"  # New tab or window
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+
 
 
 st.caption('Made by RIOZ')
@@ -139,5 +149,4 @@ st.bar_chart(df_Zeme_max_min_avg_izmers)
 st.dataframe(df_Zeme_max_min_avg_izmers)
 
 
-
-
+# %%
