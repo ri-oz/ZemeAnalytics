@@ -70,6 +70,14 @@ st.write(df_zeme_clean.describe())
 # Create a section for the dataframe
 st.header('Sludinājumu dati')
 
+# Function to make url clickable
+def make_clickable(link):
+    # target _blank to open new window
+    # extract clickable text to display for your link
+    text = df_zeme_clean['Link']
+    return f'<a target="_blank" href="{link}">{link}</a>'
+
+
 # Slider to filter dataframe by price
 Cena_EUR = df_zeme_clean["Cena EUR"].unique().tolist()
 
@@ -88,6 +96,12 @@ selmind = selmin
 selmaxd = selmax
 
 dfres = df_zeme_clean.loc[(df_zeme_clean['Cena EUR'] >= selmind) & (df_zeme_clean['Cena EUR'] <= selmaxd)]
+
+# link is the column with hyperlinks
+df_zeme_clean['Link'] = df_zeme_clean['Link'].apply(make_clickable)
+dfres = dfres.to_html(escape=False)
+st.write(dfres, unsafe_allow_html=True)
+
 
 st.dataframe(dfres)
 
@@ -137,20 +151,6 @@ st.bar_chart(df_Zeme_max_min_avg_izmers)
 
 st.dataframe(df_Zeme_max_min_avg_izmers)
 
-
-
-
-
-def make_clickable(link):
-    # target _blank to open new window
-    # extract clickable text to display for your link
-    text = df_zeme_clean['Link']
-    return f'<a target="_blank" href="{link}">{link}</a>'
-
-# link is the column with hyperlinks
-df_zeme_clean['Link'] = df_zeme_clean['Link'].apply(make_clickable)
-df_urls = df_zeme_clean.to_html(escape=False)
-st.write(df_urls, unsafe_allow_html=True)
 
 
 
