@@ -145,7 +145,7 @@ def make_clickable(link):
     # target _blank to open new window
     # extract clickable text to display for your link
     text = df_zeme_clean['Link']
-    return f'<a target="_blank" href="{link}">{text}</a>'
+    return text
 
 # link is the column with hyperlinks
 df_zeme_clean['Link'] = df_zeme_clean['Link'].apply(make_clickable)
