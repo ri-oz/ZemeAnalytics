@@ -56,14 +56,38 @@ df_tips_max = df_zeme_clean.groupby(['Zemes Tips']).max()
 df_tips_min = df_zeme_clean.groupby(['Zemes Tips']).min()
 
 
+df_tips_mean = df_zeme_clean.groupby(['Zemes Tips']).mean()
+df_tips_mean = df_tips_mean.add_prefix('Videja')
 
-#%%
+df_tips_max = df_zeme_clean.groupby(['Zemes Tips']).max()
+df_tips_max = df_tips_max.drop(columns=['Pilseta', 'Platiba Mervieniba','Adrese','Link'])
+df_tips_max = df_tips_max.add_prefix('Lielaka')
+
+df_tips_min = df_zeme_clean.groupby(['Zemes Tips']).min()
+df_tips_min = df_tips_min.drop(columns=['Pilseta', 'Platiba Mervieniba','Adrese','Link'])
+df_tips_min = df_tips_min.add_prefix('Mazaka')
+
+df_tips = df_tips_mean.merge(df_tips_max, left_on='Zemes Tips', right_on='Zemes Tips')
+df_tips = df_tips.merge(df_tips_min,left_on='Zemes Tips', right_on='Zemes Tips')
+
+del [[df_tips_max,df_tips_min,df_tips_mean]]
 
 
 df_pilseta_mean = df_zeme_clean.groupby(['Pilseta']).mean()
-df_pilseta_max = df_zeme_clean.groupby(['Pilseta']).max()
-df_pilseta_min = df_zeme_clean.groupby(['Pilseta']).min()
+df_pilseta_mean = df_pilseta_mean.add_prefix('Videja')
 
+df_pilseta_max = df_zeme_clean.groupby(['Pilseta']).max()
+df_pilseta_max = df_pilseta_max.drop(columns=['Zemes Tips', 'Platiba Mervieniba','Adrese','Link'])
+df_pilseta_max = df_pilseta_max.add_prefix('Lielaka')
+
+df_pilseta_min = df_zeme_clean.groupby(['Pilseta']).min()
+df_pilseta_min = df_pilseta_min.drop(columns=['Zemes Tips', 'Platiba Mervieniba','Adrese','Link'])
+df_pilseta_min = df_pilseta_min.add_prefix('Mazaka')
+
+df_pilseta = df_pilseta_mean.merge(df_pilseta_max, left_on='Pilseta', right_on='Pilseta')
+df_pilseta = df_pilseta.merge(df_pilseta_min,left_on='Pilseta', right_on='Pilseta')
+
+del [[df_pilseta_max,df_pilseta_min,df_pilseta_mean]]
 
 # %%
 
