@@ -101,9 +101,14 @@ st.dataframe(dfres)
 
 st.header('Pilsētu pārskats')
 
-st.bar_chart(df_Zeme_analytics_Pilseta_skaits)
+options = df_Zeme_analytics_Pilseta_skaits['Pilseta'].unique().tolist()
+selected_options = st.sidebar.multiselect('Izvēlies pilsētas',options)
 
-st.dataframe(df_Zeme_analytics_Pilseta_skaits)
+filtered_df_pilsetas = df_Zeme_analytics_Pilseta_skaits[df_Zeme_analytics_Pilseta_skaits["Pilseta"].isin(selected_options)]
+
+st.dataframe(filtered_df_pilsetas)
+
+st.bar_chart(filtered_df_pilsetas)
 
 
 # Type of land overview question
