@@ -162,7 +162,7 @@ st.bar_chart(df_pilseta)
 Cenas_tips = st.radio(
     "Datu kategorija",
     ('Pilsetu Dati', 'Pielietojuma dati'))
-if Cenas_tips == 'Pilna cena':
+if Cenas_tips == 'Pilsetu Dati':
     st.dataframe(df_pilseta)
     
 else:
