@@ -141,16 +141,6 @@ st.header('Pilsētu pārskats')
 
 st.dataframe(df_Zeme_analytics_Pilseta_skaits)
 
-csv_pilseta = df_pilseta.to_csv()
-
-st.download_button(
-    label="Download data as CSV",
-    data=csv_pilseta,
-    file_name='large_df.csv',
-    mime='text/csv',
-)
-    
-
 st.bar_chart(df_Zeme_analytics_Pilseta_skaits)
 
 
