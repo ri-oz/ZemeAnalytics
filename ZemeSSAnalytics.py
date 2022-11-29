@@ -159,6 +159,16 @@ st.header('Vidējās Cenas')
 
 st.bar_chart(df_pilseta['Videja Cena EUR'])
 
+# Videja cena eur pret cena m2 plot chart
+
+import altair as alt
+
+chart_data = df_pilseta
+c = alt.Chart(chart_data).mark_circle().encode(
+    x='Videja Cena EUR', y='Videja Cena m2', color='Videja Cena EUR', tooltip=['Videja Cena EUR', 'Videja Cena m2'])
+
+st.altair_chart(c, use_container_width=True)
+
 Cenas_tips = st.radio(
     "Datu kategorija",
     ('Pilsetu Dati', 'Pielietojuma dati'))
@@ -168,3 +178,5 @@ if Cenas_tips == 'Pilsetu Dati':
 else:
     st.dataframe(df_tips)
 
+
+# %%
