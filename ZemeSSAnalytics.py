@@ -157,7 +157,7 @@ st.dataframe(df_Zeme_analytics_Tips_skaits)
 
 st.header('Vidējās Cenas')
 
-st.bar_chart(df_pilseta)
+st.bar_chart(df_pilseta['Videja Cena EUR'])
 
 Cenas_tips = st.radio(
     "Datu kategorija",
