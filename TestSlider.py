@@ -1,3 +1,6 @@
+#%%
+
+
 import pandas as pd
 import streamlit as st
 from datetime import datetime
@@ -33,3 +36,5 @@ dfres = df.loc[(df['Sold'] >= selmind) & (df['Sold'] <= selmaxd)]
 
 st.write('### Data from selected date')
 st.dataframe(dfres)
+
+# %%

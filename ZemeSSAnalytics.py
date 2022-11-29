@@ -69,7 +69,28 @@ st.write(df_zeme_clean.describe())
 
 # Create a section for the dataframe
 st.header('Sludinājumu dati')
-st.dataframe(df_zeme_clean)
+
+# Slider to filter dataframe by price
+Cena_EUR = df_zeme_clean["Cena EUR"].unique().tolist()
+
+min_value = min(Cena_EUR)
+max_value = max(Cena_EUR)
+value = (min_value, max_value)
+
+Model = st.slider(
+    'Cena EUR:',
+    min_value=min_value,
+    max_value=max_value,
+    value=value)
+
+selmin, selmax = Model
+selmind = selmin
+selmaxd = selmax
+
+dfres = df_zeme_clean.loc[(df_zeme_clean['Cena EUR'] >= selmind) & (df_zeme_clean['Cena EUR'] <= selmaxd)]
+
+st.dataframe(dfres)
+
 
 
 # City overview section
@@ -102,6 +123,7 @@ Cenas_tips = st.radio(
 
 if Cenas_tips == 'Pilna cena':
     st.dataframe(df_Zeme_max_min_avg_cena_eur)
+    
 else:
     st.dataframe(df_Zeme_max_min_avg_cena_m2)
 
@@ -118,3 +140,5 @@ st.dataframe(df_Zeme_max_min_avg_izmers)
 
 
 # %%
+
+
