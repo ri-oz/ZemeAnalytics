@@ -141,6 +141,16 @@ st.header('Pilsētu pārskats')
 
 st.dataframe(df_Zeme_analytics_Pilseta_skaits)
 
+csv_pilseta = df_pilseta.to_csv()
+
+st.download_button(
+    label="Download data as CSV",
+    data=csv_pilseta,
+    file_name='large_df.csv',
+    mime='text/csv',
+)
+    
+
 st.bar_chart(df_Zeme_analytics_Pilseta_skaits)
 
 
@@ -165,14 +175,6 @@ Cenas_tips = st.radio(
 
 if Cenas_tips == 'Pilsetu dati':
     st.dataframe(df_pilseta)
-    csv_pilseta = convert_df(df_pilseta)
-
-    st.download_button(
-        label="Download data as CSV",
-        data=csv_pilseta,
-        file_name='large_df.csv',
-        mime='text/csv',
-)
     
 else:
     st.dataframe(df_tips)
