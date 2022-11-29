@@ -9,6 +9,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from datetime import datetime
+from streamlit_extras.dataframe_explorer import dataframe_explorer
+
 
  
 #gc = pygsheets.authorize(service_file='/Users/rioz/Documents/GitHub/ZemeAnalytics/research-python-gs.json')
@@ -62,7 +64,13 @@ st.markdown('Sludinājumu pārskats.')
 st.caption('Made by RIOZ')
 
 # Create a section for the dataframe
+
 st.header('Sludinājumu dati')
+
+
+filtered_df = dataframe_explorer(df_zeme_clean)
+st.dataframe(filtered_df, use_container_width=True)
+
 
 # Function to make url clickable
 def make_clickable(link):
