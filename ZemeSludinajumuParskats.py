@@ -56,19 +56,20 @@ st.title('Zemes Cenu pārskats Latvijā')
 
 # Description
 
-st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
+st.markdown('Sludinājumu pārskats.')
 
 
 st.caption('Made by RIOZ')
 
-
-# Create a section for the dataframe statistics
-
-st.header('Datu statistiskā analīze')
-st.write(df_zeme_clean.describe())
-
 # Create a section for the dataframe
 st.header('Sludinājumu dati')
+
+# Function to make url clickable
+def make_clickable(link):
+    # target _blank to open new window
+    # extract clickable text to display for your link
+    text = df_zeme_clean['Link']
+    return f'<a target="_blank" href="{link}">{link}</a>'
 
 
 # Slider to filter dataframe by price
@@ -90,54 +91,11 @@ selmaxd = selmax
 
 dfres = df_zeme_clean.loc[(df_zeme_clean['Cena EUR'] >= selmind) & (df_zeme_clean['Cena EUR'] <= selmaxd)]
 
+# link is the column with hyperlinks
+dfres['Link'] = dfres['Link'].apply(make_clickable)
+dfres = dfres.to_html(escape=False)
+st.write(dfres, unsafe_allow_html=True)
+
+pd.set_option('display.max_colwidth', -1)
+
 st.dataframe(dfres)
-
-
-
-# City overview section
-
-st.header('Pilsētu pārskats')
-
-st.bar_chart(df_Zeme_analytics_Pilseta_skaits)
-
-st.dataframe(df_Zeme_analytics_Pilseta_skaits)
-
-
-# Type of land overview question
-
-st.header('Zemes Tipi')
-
-st.bar_chart(df_Zeme_analytics_Tips_skaits)
-
-st.dataframe(df_Zeme_analytics_Tips_skaits)
-
-
-# Prices owerview
-
-st.header('Vidējās Cenas')
-
-st.bar_chart(df_Zeme_max_min_avg_cena_eur)
-
-Cenas_tips = st.radio(
-    "Cenas tips",
-    ('Pilna cena', 'Cena par m2'))
-
-if Cenas_tips == 'Pilna cena':
-    st.dataframe(df_Zeme_max_min_avg_cena_eur)
-    
-else:
-    st.dataframe(df_Zeme_max_min_avg_cena_m2)
-
-
-
-# Izmers owerview
-
-st.header('Zemes izmēru pārskats')
-
-st.bar_chart(df_Zeme_max_min_avg_izmers)
-
-st.dataframe(df_Zeme_max_min_avg_izmers)
-
-
-
-
