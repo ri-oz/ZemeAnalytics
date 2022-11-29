@@ -98,7 +98,7 @@ selmaxd = selmax
 dfres = df_zeme_clean.loc[(df_zeme_clean['Cena EUR'] >= selmind) & (df_zeme_clean['Cena EUR'] <= selmaxd)]
 
 # link is the column with hyperlinks
-df_zeme_clean['Link'] = df_zeme_clean['Link'].apply(make_clickable)
+dfres['Link'] = dfres['Link'].apply(make_clickable)
 dfres = dfres.to_html(escape=False)
 st.write(dfres, unsafe_allow_html=True)
 
