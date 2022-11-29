@@ -48,9 +48,9 @@ df_Zeme_max_min_avg_cena_m2 = df_Zeme.groupby('Pilseta').agg({'Cena m2': ['mean'
 
 df_Zeme_max_min_avg_izmers = df_Zeme.groupby('Pilseta').agg({'Platiba Daudzums': ['mean', 'min', 'max']})
 
-new_header1 = df_Zeme_max_min_avg_cena_eur.iloc[0] #grab the first row for the header
-df_Zeme_max_min_avg_cena_eur = df_Zeme_max_min_avg_cena_eur[1:] #take the data less the header row
-df_Zeme_max_min_avg_cena_eur.columns = new_header1
+#new_header1 = df_Zeme_max_min_avg_cena_eur.iloc[0] #grab the first row for the header
+#df_Zeme_max_min_avg_cena_eur = df_Zeme_max_min_avg_cena_eur[1:] #take the data less the header row
+#df_Zeme_max_min_avg_cena_eur.columns = new_header1
 
 new_header2 = df_Zeme_max_min_avg_cena_m2.iloc[0] 
 df_Zeme_max_min_avg_cena_m2 = df_Zeme_max_min_avg_cena_m2[1:] 
