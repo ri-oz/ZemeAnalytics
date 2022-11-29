@@ -9,7 +9,6 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from datetime import datetime
-from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 
  
@@ -67,9 +66,6 @@ st.caption('Made by RIOZ')
 
 st.header('Sludinājumu dati')
 
-
-filtered_df = dataframe_explorer(df_zeme_clean)
-st.dataframe(filtered_df, use_container_width=True)
 
 
 # Function to make url clickable
