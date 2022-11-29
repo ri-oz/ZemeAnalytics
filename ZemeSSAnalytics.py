@@ -160,35 +160,11 @@ st.header('Vidējās Cenas')
 st.bar_chart(df_pilseta)
 
 Cenas_tips = st.radio(
-    "Datu kategorijas",
-    ('Pilsetu dati', 'Zemes pielietojuma dati'))
-
-if Cenas_tips == 'Pilsetu dati':
+    "Datu kategorija",
+    ('Pilsetu Dati', 'Pielietojuma dati'))
+if Cenas_tips == 'Pilna cena':
     st.dataframe(df_pilseta)
     
 else:
     st.dataframe(df_tips)
-    
 
-
-
-
-
-
-
-
-# %%
-
-@st.cache
-def convert_df(df):
-    # IMPORTANT: Cache the conversion to prevent computation on every rerun
-    return df.to_csv().encode('utf-8')
-
-csv_pilseta = convert_df(df_pilseta)
-
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
-    file_name='large_df.csv',
-    mime='text/csv',
-)
