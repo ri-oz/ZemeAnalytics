@@ -25,11 +25,14 @@ from datetime import datetime
 
 url = 'https://raw.githubusercontent.com/ri-oz/ZemeAnalytics/QA/Py_land_data%20-%20Sheet1.csv'
 
-df_Zeme = pd.read_csv(url, index_col=0)
+df_Zeme = pd.read_csv(url)
 
 # Drop error / na rows
 
 df_Zeme.dropna(how='any')
+
+df_zeme_clean = df_Zeme[["Pilseta","Zemes Tips","Cena EUR","Cena m2","Platiba Daudzums","Platiba Mervieniba","Adrese","Link"]]
+
 
 #df_Zeme = pd.DataFrame(wks.get_all_records())
 
@@ -39,6 +42,13 @@ df_Zeme_analytics_Pilseta_skaits = df_Zeme['Pilseta'].value_counts(ascending=Tru
 
 df_Zeme_analytics_Tips_skaits = df_Zeme['Zemes Tips'].value_counts(ascending=True)
 
+df_Zeme_max_min_avg_cena_eur = df_Zeme.groupby('Pilseta').agg({'Cena EUR': ['mean', 'min', 'max']})
+df_Zeme_max_min_avg_cena_m2 = df_Zeme.groupby('Pilseta').agg({'Cena m2': ['mean', 'min', 'max']})
+
+df_Zeme_max_min_avg_izmers = df_Zeme.groupby('Pilseta').agg({'Platiba Daudzums': ['mean', 'min', 'max']})
+
+
+
 # Title
 
 st.title('Zemes Cenu pārskats Latvijā')
@@ -46,17 +56,20 @@ st.title('Zemes Cenu pārskats Latvijā')
 
 # Description
 
-st.text('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
+st.markdown('Datu analīzes projekts par zemes pārdošanu un cenām Latvijā.')
+
+
+st.caption('Made by RIOZ')
 
 
 # Create a section for the dataframe statistics
 
-st.header('Datu statistiskā anaīze')
-st.write(df_Zeme.describe())
+st.header('Datu statistiskā analīze')
+st.write(df_zeme_clean.describe())
 
 # Create a section for the dataframe
 st.header('Sludinājumu dati')
-st.dataframe(df_Zeme)
+st.dataframe(df_zeme_clean)
 
 
 # City overview section
@@ -77,11 +90,31 @@ st.bar_chart(df_Zeme_analytics_Tips_skaits)
 st.dataframe(df_Zeme_analytics_Tips_skaits)
 
 
+# Prices owerview
+
+st.header('Vidējās Cenas')
+
+st.bar_chart(df_Zeme_max_min_avg_cena_eur)
+
+Cenas_tips = st.radio(
+    "Cenas tips",
+    ('Pilna cena', 'Cena par m2'))
+
+if Cenas_tips == 'Pilna cena':
+    st.dataframe(df_Zeme_max_min_avg_cena_eur)
+else:
+    st.dataframe(df_Zeme_max_min_avg_cena_m2)
 
 
 
+# Izmers owerview
+
+st.header('Zemes izmēru pārskats')
+
+st.bar_chart(df_Zeme_max_min_avg_izmers)
+
+st.dataframe(df_Zeme_max_min_avg_izmers)
 
 
 
-
-
+# %%
